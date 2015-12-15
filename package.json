@@ -1,14 +1,14 @@
 {
-  "name": "generator-ko",
-  "version": "0.2.0",
+  "name": "generator-simpleko",
+  "version": "0.0.1",
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "SteveSanderson/generator-ko",
+  "repository": "gencebay/simpleko",
   "author": {
     "name": "Steven Sanderson",
     "email": "",
-    "url": "https://github.com/SteveSanderson"
+    "url": "https://github.com/gencebay"
   },
   "engines": {
     "node": ">=0.10.0"
