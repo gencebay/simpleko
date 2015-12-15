@@ -4,7 +4,7 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 
-var KoGenerator = yeoman.generators.Base.extend({
+var SimpleKoGenerator = yeoman.generators.Base.extend({
   init: function () {
     this.pkg = require('../package.json');
 
@@ -99,4 +99,4 @@ var KoGenerator = yeoman.generators.Base.extend({
   }
 });
 
-module.exports = KoGenerator;
+module.exports = SimpleKoGenerator;
