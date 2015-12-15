@@ -3,8 +3,8 @@
 Generates a starting point for a Knockout application.
 
 ## Prerequisites:
- - Install [git](http://help.github.com/set-up-git-redirect)
- - Install [node.js](http://nodejs.org/download/)
+ - Install [git](https://help.github.com/articles/set-up-git/)
+ - Install [node.js](https://nodejs.org/en/)
 
 ## Installation:
 Install dependencies:
