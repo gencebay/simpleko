@@ -1,9 +1,19 @@
 // Node modules
-var fs = require('fs'), vm = require('vm'), merge = require('deeply'), chalk = require('chalk'), es = require('event-stream');
+var fs = require('fs'), 
+    vm = require('vm'), 
+    merge = require('deeply'), 
+    chalk = require('chalk'), 
+    es = require('event-stream');
 
 // Gulp and plugins
-var gulp = require('gulp'), rjs = require('gulp-requirejs-bundler'), concat = require('gulp-concat'), clean = require('gulp-clean'),
-    replace = require('gulp-replace'), uglify = require('gulp-uglify'), htmlreplace = require('gulp-html-replace');
+var gulp = require('gulp'), 
+    rjs = require('gulp-requirejs-bundler'), 
+    concat = require('gulp-concat'), 
+    clean = require('gulp-clean'),
+    replace = require('gulp-replace'), 
+    uglify = require('gulp-uglify'), 
+    htmlreplace = require('gulp-html-replace');
+    connect = require('gulp-connect');
 
 // Config
 var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require.config.js') + '; require;');
@@ -55,6 +65,11 @@ gulp.task('html', function() {
             'js': 'scripts.js'
         }))
         .pipe(gulp.dest('./dist/'));
+});
+
+// After building, starts a trivial static file server
+gulp.task('serve:dist', ['default'], function() {
+    return connect.server({ root: './dist', port: 5002 });
 });
 
 // Removes all files from ./dist/

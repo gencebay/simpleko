@@ -1,0 +1,14 @@
+[
+  {
+    "changeList": "432462",
+    "owner":"Samy",
+    "startedDate": "4/17/2014",
+    "startedTime": "6:42 am",
+    "buildSteps":{
+      "build":{ "value": 1, "debug": "#", "release": "#", "time": "3:14 am"},
+      "unitTest": { "value": 88, "successItemCount": 342, "warningItemCount": 3, "errorItemCount": 0, "time": "4:30" },
+      "functionalTest": { "value": 98, "successItemCount": 463, "warningItemCount": 200, "errorItemCount": 0, "time": "13:10" }
+    },
+    "status": "passed"
+  }
+]

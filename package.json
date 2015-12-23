@@ -1,20 +1,20 @@
 {
   "name": "generator-simpleko",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "gencebay/simpleko",
   "author": {
-    "name": "Steven Sanderson",
+    "name": "Gencebay Demir",
     "email": "",
-    "url": "https://github.com/gencebay"
+    "url": "https://github.com/gencebay/KoSinglePageApp"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.12.2"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha  --timeout 15000"
   },
   "files": [
     "app",
@@ -24,8 +24,9 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "yeoman-generator": "~0.16.0",
-    "chalk": "~0.4.0"
+    "chalk": "^1.1.1",
+    "underscore.string": "^3.2.2",
+    "yeoman-generator": "^0.16.0"
   },
   "devDependencies": {
     "mocha": "*"

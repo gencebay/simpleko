@@ -3,34 +3,54 @@
 var path = require('path');
 var helpers = require('yeoman-generator').test;
 
-describe('ko generator', function () {
-  beforeEach(function (done) {
-    helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
-      if (err) {
-        return done(err);
-      }
+describe('simpleko generator', function () {
 
-      this.app = helpers.createGenerator('ko:app', [
-        '../../app'
-      ]);
+  var simpleko;
+
+  var mockPrompts = {
+    compass: true,
+    bootstrap: true,
+    compassBootstrap: true,
+    modules: []
+  };
+
+  var genOptions = {
+    'appPath': 'app',
+    'skip-install': true,
+    'skip-welcome-message': true,
+    'skip-message': true
+  };
+
+  var deps = [
+                '../../../app',
+                // [createDummyGenerator(), 'karma:app']
+            ];
+
+  beforeEach(function (done) {
+    helpers.testDirectory(path.join(__dirname, 'tmp', 'file'), function (err) {
+      if (err) {
+        done(err);
+      }
+      simpleko = helpers.createGenerator(
+        'ko:app',
+        deps,
+        false,
+        genOptions
+      );
+      helpers.mockPrompt(simpleko, mockPrompts);
       done();
-    }.bind(this));
+    });
   });
 
   it('creates expected files', function (done) {
-    var expected = [
-      // add files you expect to exist here.
-      '.jshintrc',
-      '.editorconfig'
-    ];
-
-    helpers.mockPrompt(this.app, {
-      'someOption': true
-    });
-    this.app.options['skip-install'] = true;
-    this.app.run({}, function () {
-      helpers.assertFile(expected);
-      done();
-    });
+      var expected = [
+        // add files you expect to exist here.
+        '.jshintrc',
+        '.editorconfig'
+      ];
+      simpleko.run({}, function() {
+        helpers.assertFile(expected);
+        done();
+      });
   });
 });

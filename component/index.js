@@ -4,7 +4,7 @@ var yeoman = require('yeoman-generator');
 var fs = require('fs');
 var chalk = require('chalk');
 
-var ComponentGenerator = yeoman.generators.NamedBase.extend({
+var ComponentGenerator = yeoman.NamedBase.extend({
 
   detectCodeLanguage: function() {
     this.codeFileExtension = '.js';

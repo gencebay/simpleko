@@ -3,6 +3,7 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
+var _s = require('underscore.string');
 
 var SimpleKoGenerator = yeoman.generators.Base.extend({
   init: function () {
@@ -58,7 +59,7 @@ var SimpleKoGenerator = yeoman.generators.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.longName = props.name;
-      this.slugName = this._.slugify(this.longName);
+      this.slugName = _s.slugify(this.longName);
       this.includeTests = props.includeTests;
       done();
     }.bind(this));
@@ -70,6 +71,7 @@ var SimpleKoGenerator = yeoman.generators.Base.extend({
     this.template('_bower.json', 'bower.json');
     this.template('_gulpfile.js', 'gulpfile.js');
     this.template('_gitignore', '.gitignore');
+    this.template('_index.js', 'index.js');
     this.copy('bowerrc', '.bowerrc');
 
     if (this.includeTests) {
