@@ -9,7 +9,7 @@ var fs = require('fs'),
 var gulp = require('gulp'), 
     rjs = require('gulp-requirejs-bundler'), 
     concat = require('gulp-concat'), 
-    clean = require('gulp-clean'),
+    rimraf = require('gulp-rimraf'),
     replace = require('gulp-replace'), 
     uglify = require('gulp-uglify'), 
     htmlreplace = require('gulp-html-replace'),
@@ -86,7 +86,7 @@ gulp.task('serve:dist', [], function() {
 // Removes all files from ./dist/
 gulp.task('clean', function() {
     return gulp.src('./dist/**/*', { read: false })
-        .pipe(clean());
+        .pipe(rimraf());
 });
 
 gulp.task('default', ['html', 'js', 'sass:src', 'sass:dist'], function(callback) {
