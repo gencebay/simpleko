@@ -25,12 +25,12 @@ describe('simpleko generator', function () {
   };
 
   var deps = [
-                '../../../app',
+                '../../app',
                 // [createDummyGenerator(), 'karma:app']
             ];
 
   beforeEach(function (done) {
-    helpers.testDirectory(path.join(__dirname, 'temp', 'file'), function (err) {
+    helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
       if (err) {
         done(err);
       }
