@@ -12,8 +12,9 @@ var gulp = require('gulp'),
     clean = require('gulp-clean'),
     replace = require('gulp-replace'), 
     uglify = require('gulp-uglify'), 
-    htmlreplace = require('gulp-html-replace');
-    connect = require('gulp-connect');
+    htmlreplace = require('gulp-html-replace'),
+    connect = require('gulp-connect'),
+    sass = require('gulp-sass');
 
 // Config
 var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require.config.js') + '; require;');
@@ -22,7 +23,7 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
         baseUrl: './src',
         name: 'app/startup',
         paths: {
-            requireLib: 'bower_modules/requirejs/require'
+            requireLib: 'vendor/requirejs/require'
         },
         include: [
             'requireLib',
@@ -46,17 +47,6 @@ gulp.task('js', function () {
         .pipe(gulp.dest('./dist/'));
 });
 
-// Concatenates CSS files, rewrites relative paths to Bootstrap fonts, copies Bootstrap fonts
-gulp.task('css', function () {
-    var bowerCss = gulp.src('src/bower_modules/components-bootstrap/css/bootstrap.min.css')
-            .pipe(replace(/url\((')?\.\.\/fonts\//g, 'url($1fonts/')),
-        appCss = gulp.src('src/css/*.css'),
-        combinedCss = es.concat(bowerCss, appCss).pipe(concat('css.css')),
-        fontFiles = gulp.src('./src/bower_modules/components-bootstrap/fonts/*', { base: './src/bower_modules/components-bootstrap/' });
-    return es.concat(combinedCss, fontFiles)
-        .pipe(gulp.dest('./dist/'));
-});
-
 // Copies index.html, replacing <script> and <link> tags to reference production URLs
 gulp.task('html', function() {
     return gulp.src('./src/index.html')
@@ -67,8 +57,29 @@ gulp.task('html', function() {
         .pipe(gulp.dest('./dist/'));
 });
 
-// After building, starts a trivial static file server
-gulp.task('serve:dist', ['default'], function() {
+gulp.task('sass:src', function () {
+  gulp.src('./vendor/bootstrap-sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./src/css'));
+});
+
+gulp.task('sass:dist', function () {
+  gulp.src('./vendor/bootstrap-sass/**/*.scss')
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(gulp.dest('./dist/css'));
+});
+ 
+gulp.task('sass:watch', function () {
+  gulp.watch('./vendor/bootstrap-sass/**/*.scss', ['sass']);
+});
+
+// dev server
+gulp.task('serve:src', function() {
+    return connect.server({ root: './src', port: 5002 });
+});
+
+// After building, starts a trivial static file server with dependencies []
+gulp.task('serve:dist', [], function() {
     return connect.server({ root: './dist', port: 5002 });
 });
 
@@ -78,7 +89,7 @@ gulp.task('clean', function() {
         .pipe(clean());
 });
 
-gulp.task('default', ['html', 'js', 'css'], function(callback) {
+gulp.task('default', ['html', 'js', 'sass:src', 'sass:dist'], function(callback) {
     callback();
     console.log('\nPlaced optimized files in ' + chalk.magenta('dist/\n'));
 });

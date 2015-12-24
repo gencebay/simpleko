@@ -8,6 +8,9 @@ describe('simpleko generator', function () {
   var simpleko;
 
   var mockPrompts = {
+    longName: "Simple Ko Generator App",
+    slugName: "SimpleKoGenerator",
+    includeTests: true,
     compass: true,
     bootstrap: true,
     compassBootstrap: true,
@@ -27,7 +30,7 @@ describe('simpleko generator', function () {
             ];
 
   beforeEach(function (done) {
-    helpers.testDirectory(path.join(__dirname, 'tmp', 'file'), function (err) {
+    helpers.testDirectory(path.join(__dirname, 'temp', 'file'), function (err) {
       if (err) {
         done(err);
       }
@@ -45,8 +48,7 @@ describe('simpleko generator', function () {
   it('creates expected files', function (done) {
       var expected = [
         // add files you expect to exist here.
-        '.jshintrc',
-        '.editorconfig'
+        'index.js'
       ];
       simpleko.run({}, function() {
         helpers.assertFile(expected);

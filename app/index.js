@@ -48,7 +48,7 @@ var SimpleKoGenerator = yeoman.generators.Base.extend({
 
     var prompts = [{
       name: 'name',
-      message: 'What\'s the name of your new site?',
+      message: 'What\'s the name of your new app?',
       default: path.basename(process.cwd())
     }, {
       type: 'confirm',
@@ -58,7 +58,7 @@ var SimpleKoGenerator = yeoman.generators.Base.extend({
     }];
 
     this.prompt(prompts, function (props) {
-      this.longName = props.name;
+      this.longName = _s.replaceAll(props.name, "'", "\\'");
       this.slugName = _s.slugify(this.longName);
       this.includeTests = props.includeTests;
       done();
@@ -76,6 +76,7 @@ var SimpleKoGenerator = yeoman.generators.Base.extend({
 
     if (this.includeTests) {
       // Set up tests
+      this.log(chalk.blue("Set up tests..."));
       this._processDirectory('test', 'test');
       this.copy('bowerrc_test', 'test/.bowerrc');
       this.copy('karma.conf.js');
@@ -89,11 +90,15 @@ var SimpleKoGenerator = yeoman.generators.Base.extend({
     for (var i = 0; i < files.length; i++) {
         var f = files[i];
         var src = path.join(root, f);
-        if(path.basename(f).indexOf('_') == 0){
-            var dest = path.join(destination, path.dirname(f), path.basename(f).replace(/^_/, ''));
+        if(path.basename(f).indexOf('_') == 0) {
+            var basenamePath = path.basename(f).replace(/^_/, '');
+            var dest = path.join(destination, path.dirname(f), basenamePath);
+            this.log(chalk.green("Basename is:"), path.basename(f));
+            this.log(chalk.yellow("Templating Source: " + src + " -> to: " + dest));
+            this.log(chalk.blue('-------------------------------------------------------------'));
             this.template(src, dest);
         }
-        else{
+        else {
             var dest = path.join(destination, f);
             this.copy(src, dest);
         }
